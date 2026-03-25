@@ -1,4 +1,4 @@
-name: Deploy to GCP
+name: Deploy to GCP Bucket
 
 on:
   push:
@@ -10,17 +10,21 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
+      # 1. Get your GitHub files
+      - name: Checkout repository
         uses: actions/checkout@v4
 
+      # 2. Authenticate to GCP
       - name: Authenticate to GCP
         uses: google-github-actions/auth@v2
         with:
           credentials_json: '${{ secrets.GCP_SA_KEY }}'
 
+      # 3. Install gcloud + gsutil
       - name: Set up Cloud SDK
         uses: google-github-actions/setup-gcloud@v2
 
-      - name: Upload to GCS
+      # 4. Upload files to bucket
+      - name: Upload files to GCS
         run: |
-          gsutil -m rsync -r ./ gs://your-bucket-name
+          gsutil -m rsync -r -d ./ gs://cloudweb3
