@@ -26,4 +26,4 @@ jobs:
 
       - name: Upload files to GCS
         run: |
-          gsutil -m cp -r * gs://cloudweb3
+          gsutil -m cp -r * gs://eshentech.xyz
